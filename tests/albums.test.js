@@ -10,7 +10,7 @@ describe('/albums', () => {
   before(async () => {
     try {
       await Artist.sequelize.sync();
-      await Album.sequelize.sync();
+      //await Album.sequelize.sync();
     } catch (err) {
       console.log(err);
     }

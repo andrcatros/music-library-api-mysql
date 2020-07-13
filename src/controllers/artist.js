@@ -10,7 +10,7 @@ exports.list = (req, res) => {
 
 exports.getArtistsById = (req, res) => {
     const id = req.params.artistId;
-    Artist.findOne({where: { id: id}}).then(artist => {
+    Artist.findByPk(id).then(artist => {
         if (!artist){
             res.status(404).json({ error: 'The artist could not be found.'})
         } else {
@@ -21,7 +21,7 @@ exports.getArtistsById = (req, res) => {
 
 exports.updateArtist = (req, res) => {
     const id = req.params.artistId;
-    Artist.findOne({where: {id: id}}).then(artist => {
+    Artist.findByPk(id).then(artist => {
         if (!artist){
             res.status(404).json({ error: 'The artist could not be found.'})
         } else {

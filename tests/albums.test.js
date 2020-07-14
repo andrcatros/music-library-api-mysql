@@ -102,15 +102,14 @@ describe('/albums', () => {
         it('get album of given artist by album id', (done) => {
           let album = albums[0]
           request(app)
-            .get(`/artists/${artist.id}/${album.id}`)
+            .get(`/artists/${artist.id}/albums/${album.id}`)
             .then((res) => {
               expect(res.status).to.equal(200);
-              expect(res.body.name).to.equal('A Test Album');
-              expect(res.body.year).to.equal(1992)
+              expect(res.body[0].name).to.equal('A Test Album');
+              expect(res.body[0].year).to.equal(1992)
               });
               done();
             });
-        });
       
 
       it('returns a 404 if the artist does not exist', (done) => {
@@ -178,4 +177,5 @@ describe('/albums', () => {
   
     });*/
 });
-});
+    })
+  });

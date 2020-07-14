@@ -21,6 +21,8 @@ app.delete('/artists/:artistId', artistControllers.delete);
 
 // albums 
 app.post('/artists/:artistId/albums', albumControllers.createAlbum);
-app.get('/artists/:artistId/albums', albumControllers.getAlbumsByArtistId)
+app.get('/artists/:artistId/albums', albumControllers.getAlbumsByArtistId);
+
+app.get('/artists/:artistId/albums/:albumId', albumControllers.getAlbumByAlbumId);
 
 module.exports = app;

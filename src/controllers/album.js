@@ -36,4 +36,17 @@ exports.getAlbumsByArtistId = (req, res) => {
         }
     })
 
+};
+
+exports.getAlbumByAlbumId = (req, res) => {
+  const artistId = req.params.artistId;
+  const albumId = req.params.albumId;
+
+  Album.findAll({where: { artistId: artistId, id: albumId}}).then(foundAlbums =>{
+    if (foundAlbums.length == 0){
+      res.status(404).json({ error: 'The album could not be found.' });
+    } else {
+      res.status(200).json(foundAlbums)
+    }
+  })
 }

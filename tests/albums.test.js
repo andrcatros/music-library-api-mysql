@@ -181,7 +181,7 @@ describe('/albums', () => {
 
     // DELETE tests
     describe('DELETE /artists/:artistId/albums/:albumId', () => {
-      xit('deletes album record by id', (done) => {
+      it('deletes album record by id', (done) => {
         const album = albums[0] 
         request(app)
           .delete(`/artists/${artist.id}/albums/${album.id}`)

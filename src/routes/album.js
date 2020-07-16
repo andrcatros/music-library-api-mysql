@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
     // post requests
-    app.post('/artists/:artistId/albums', albumControllers.createAlbum);
+    app.post('/artists/:artistId/albums', albumControllers.create);
 
     // get requests
     app.get('/artists/:artistId/albums', albumControllers.getAlbumsByArtistId);
@@ -12,5 +12,6 @@ module.exports = (app) => {
     app.patch('/artists/:artistId/albums/:albumId', albumControllers.updateAlbumById);
 
     // delete requests 
+    app.delete('/artists/:artistId/albums/:albumId', albumControllers.delete);
 
 };

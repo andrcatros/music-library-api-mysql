@@ -1,7 +1,7 @@
 const { Artist, Album } = require('../models');
 
 // controllers for POST requests
-exports.createAlbum = (req, res) => {
+exports.create = (req, res) => {
   
     Artist.findByPk(req.params.artistId).then(foundArtist => {
       if (!foundArtist) {
@@ -68,3 +68,15 @@ exports.updateAlbumById = (req, res) => {
 }
 
 // controllers for DELETE requests 
+exports.delete = (req, res) => {
+  const artistId = req.params.artistId;
+  const albumId = req.params.albumId;
+
+  Album.destroy({where:{id:albumId, artistId:artistId}}).then(deleted => {
+    if (!deleted){
+      res.status(404).json({error: 'The album could not be found.'})
+    } else {
+      res.status(204).json(deleted);
+      }
+    })
+  }

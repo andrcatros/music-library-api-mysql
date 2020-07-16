@@ -135,9 +135,9 @@ describe('/albums', () => {
 
 
       });
-/*
+
     describe('PATCH /artists/:artistId/albums', () => {
-      it('updates album name by artist id', (done) => {
+      xit('updates album name by artist id', (done) => {
         request(app)
           .patch(`/artists/${artist.id}/albums`)
           .send({ name: 'Some Other Album' })
@@ -150,7 +150,7 @@ describe('/albums', () => {
           });
       });
 
-      it('updates album year by artist id', (done) => {
+      xit('updates album year by artist id', (done) => {
         request(app)
           .patch(`/artists/${artist.id}/albums`)
           .send({ year: 3000 })
@@ -175,7 +175,7 @@ describe('/albums', () => {
           });
       });
   
-    });*/
+    });
 });
-    })
-  });
+      })
+    });

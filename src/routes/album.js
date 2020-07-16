@@ -8,4 +8,8 @@ module.exports = (app) => {
     app.get('/artists/:artistId/albums', albumControllers.getAlbumsByArtistId);
     app.get('/artists/:artistId/albums/:albumId', albumControllers.getAlbumByAlbumId);
 
+    // patch requests 
+
+    // delete requests 
+
 };

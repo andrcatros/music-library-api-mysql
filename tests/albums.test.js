@@ -29,6 +29,7 @@ describe('/albums', () => {
     }
   });
 
+  // POST tests 
   describe('POST /artists/:artistId/albums', () => {
     it('creates a new album for a given artist', (done) => {
       request(app)
@@ -81,6 +82,7 @@ describe('/albums', () => {
         });
       });
     
+      // GET tests
       describe('GET /artists/${artist.id}/albums', () => {
         it('gets all album records of given artist', (done) => {
           request(app)
@@ -131,11 +133,9 @@ describe('/albums', () => {
             done();
           });
       });
+    });
 
-
-
-      });
-
+    // PATCH tests
     describe('PATCH /artists/:artistId/albums', () => {
       xit('updates album name by artist id', (done) => {
         request(app)
@@ -164,7 +164,7 @@ describe('/albums', () => {
           });
       });
 
-      it('returns a 404 if the artist does not exist', (done) => {
+      xit('returns a 404 if the artist does not exist', (done) => {
         request(app)
           .patch('/artists/12345/albums')
           .send({ name: 'AlbumName' })
@@ -173,9 +173,35 @@ describe('/albums', () => {
             expect(res.body.error).to.equal('The artist could not be found.');
             done();
           });
-      });
-  
+      }); 
     });
-});
+  });
+
+    // DELETE tests
+    describe('DELETE /artists/:artistId/albums/:albumId', () => {
+      xit('deletes album record by id', (done) => {
+        const album = albums[0] 
+        request(app)
+          .delete(`/artists/${artist.id}/albums/${album.id}`)
+          .then((res) => {
+            expect(res.status).to.equal(204);
+            Album.findByPk(album.id, { raw: true }).then((updatedAlbum) => {
+              expect(updatedAlbum).to.equal(null);
+              done();
+            });
+          });
+      });
+
+      xit('returns a 404 if the artist does not exist', (done) => {
+        request(app)
+          .delete('/artists/12345/albums/12345')
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The album could not be found.');
+            done();
+          });
+      });
+    });
+
       })
     });

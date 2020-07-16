@@ -9,6 +9,7 @@ module.exports = (app) => {
     app.get('/artists/:artistId/albums/:albumId', albumControllers.getAlbumByAlbumId);
 
     // patch requests 
+    app.patch('/artists/:artistId/albums/:albumId', albumControllers.updateAlbumById);
 
     // delete requests 
 

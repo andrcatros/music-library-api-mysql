@@ -53,5 +53,18 @@ exports.getAlbumByAlbumId = (req, res) => {
 };
 
 // controllers for PATCH requests 
+exports.updateAlbumById = (req, res) => {
+  const artistId = req.params.artistId;
+  const albumId = req.params.albumId;
+  
+  Album.findAll({where: { artistId: artistId, id: albumId}}).then(foundAlbums =>{
+    if (foundAlbums.length == 0){
+      res.status(404).json({ error: 'The album could not be found.' });
+    } else {
+      Album.update(req.body, {where: { artistId: artistId, id: albumId}})
+      .then(rowsUpdated => res.status(200).json(rowsUpdated))
+    }
+  });  
+}
 
 // controllers for DELETE requests 

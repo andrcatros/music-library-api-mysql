@@ -118,7 +118,7 @@ describe('/songs', () => {
 
 
       describe('GET /artists/:artistId}/albums/:albumId/songs/:songId', () => {
-        it('get song of given album by song id', (done) => {
+        it('gets song of given album by song id', (done) => {
           let song = songs[0]
           request(app)
             .get(`/artists/${artist.id}/albums/${album.id}/songs/${song.id}`)
@@ -134,8 +134,59 @@ describe('/songs', () => {
  
 
       // PATCH tests 
+    describe('PATCH /artists/:artistId/albums/:albumId/songs/:songId', () => {
+      it('updates song name by song id', (done) => {
+        const song = songs[0]
+        request(app)
+          .patch(`/artists/${artist.id}/albums/${album.id}/songs/${song.id}`)
+          .send({ name: 'Test Song' })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Song.findByPk(song.id).then(updatedSong => {
+              expect(updatedSong.name).to.equal('Test Song');
+              done();
+            });
+          });
+      });
+
+      it('returns a 404 if the song does not exist (but artist and album exists)', (done) => {
+        request(app)
+          .patch(`/artists/${artist.id}/albums/${album.id}/songs/12345`)
+          .send({ name: 'AlbumName' })
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The song could not be found.');
+            done();
+          });
+      }); 
+    });
 
       // DELETE tests
+
+      describe('DELETE /artists/:artistId/albums/:albumId/songs/:songId', () => {
+        it('deletes song record by id', (done) => {
+          const song = songs[0] 
+          request(app)
+            .delete(`/artists/${artist.id}/albums/${album.id}/songs/${song.id}`)
+            .then((res) => {
+              expect(res.status).to.equal(204);
+              Song.findByPk(album.id, { raw: true }).then(updatedSong => {
+                expect(updatedSong).to.equal(null);
+                done();
+              });
+            });
+        });
+  
+        it('returns a 404 if the song does not exist', (done) => {
+          request(app)
+            .delete(`/artists/${artist.id}/albums/${album.id}/songs/12345`)
+            .then((res) => {
+              expect(res.status).to.equal(404);
+              expect(res.body.error).to.equal('The song could not be found.');
+              done();
+            });
+        });
+      });
 
   });
 });

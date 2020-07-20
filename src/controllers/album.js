@@ -16,10 +16,9 @@ exports.createAlbum = (req, res) => {
         .then(albums => res.status(201).json(albums))
         } 
       // if req.body is just one object, create albums without Promise.all  
-      else {
-        Album.create(req.body).then(album => {
-            album.setArtist(foundArtist).then(updatedAlbum => res.status(201).json(updatedAlbum));
-             });
+    else {
+        Album.create({name: req.body.name, year:req.body.year, artistId: req.params.artistId})
+        .then(updatedAlbum => res.status(201).json(updatedAlbum));
         }; 
     });
   };

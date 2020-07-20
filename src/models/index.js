@@ -19,12 +19,12 @@ const setupDatabase = () => {
 
 
 
-  Album.belongsTo(Artist, {foreignKey: 'ArtistId'});
-  Artist.hasMany(Album);
+  Album.belongsTo(Artist, {foreignKey: 'artistId'});
+  Artist.hasMany(Album, {foreignKey: 'artistId'});
 
-  Album.hasMany(Song);
-  Song.belongsTo(Album, {foreignKey: 'AlbumId'});
-  Song.belongsTo(Artist, {foreignKey: 'ArtistId'});
+  Album.hasMany(Song, {foreignKey: 'albumId'});
+  Song.belongsTo(Album, {foreignKey: 'albumId'});
+  Song.belongsTo(Artist, {foreignKey: 'artistId'});
 
 
   connection.sync({ alter: true });

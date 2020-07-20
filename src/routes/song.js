@@ -6,6 +6,7 @@ module.exports = (app) => {
 
     // get requests 
     app.get('/artists/:artistId/albums/:albumId/songs', songControllers.list)
+    app.get('/artists/:artistId/albums/:albumId/songs/:songId', songControllers.listById);
 };
 
 

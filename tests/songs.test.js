@@ -50,8 +50,8 @@ describe('/songs', () => {
           const songId = res.body.id;
           expect(res.body.id).to.equal(songId);
           expect(res.body.name).to.equal('Solitude Is Bliss');
-          expect(res.body.ArtistId).to.equal(artist.id);
-          expect(res.body.AlbumId).to.equal(album.id);
+          expect(res.body.artistId).to.equal(artist.id);
+          expect(res.body.albumId).to.equal(album.id);
           done();
         });
     });
@@ -82,25 +82,60 @@ describe('/songs', () => {
         })
     });
   
+  });
+
     describe('tests with songs in the database', () => {
       let songs;
       beforeEach((done) => {
         Promise.all([
-          Song.create({ name: 'A Summer Song', ArtistId: artist.id, AlbumId: album.id }),
-          Song.create({ name: 'Another Funky Summer Song', ArtistId: artist.id, AlbumId: album.id}),
-          Song.create({ name: 'Yet Another Song You Will Just Love', ArtistId: artist.id, AlbumId: album.id }),
+          Song.create({ name: 'A Summer Song', artistId: artist.id, albumId: album.id }),
+          Song.create({ name: 'Another Funky Summer Song', artistId: artist.id, albumId: album.id}),
+          Song.create({ name: 'Yet Another Song You Will Just Love', artistId: artist.id, albumId: album.id }),
         ]).then((documents) => {
           songs = documents;
           done();
         });
       });
       
-      // GET tests 
+      // GET tests
+      describe('GET /artists/:artistId/albums/:albumId/songs', () => {
+        it('gets all song records on a given album', (done) => {
+          request(app)
+            .get(`/artists/${artist.id}/albums/${album.id}/songs`)
+            .then((res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body.length).to.equal(3);
+              res.body.forEach((song) => {
+                const expected = songs.find((a) => a.id === song.id);
+                expect(song.name).to.equal(expected.name);
+                expect(song.artistId).to.equal(artist.id);
+                expect(song.albumId).to.equal(album.id);
+              });
+              done();
+            });
+        });
+      });
+
+
+      describe('GET /artists/:artistId}/albums/:albumId/songs/:songId', () => {
+        it('get song of given album by song id', (done) => {
+          let song = songs[0]
+          request(app)
+            .get(`/artists/${artist.id}/albums/${album.id}/songs/${song.id}`)
+            .then((res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body.name).to.equal('A Summer Song');
+              expect(res.body.artistId).to.equal(artist.id);
+              expect(res.body.albumId).to.equal(album.id);
+              });
+              done();
+            });
+      });
+ 
 
       // PATCH tests 
 
       // DELETE tests
 
   });
-});
 });

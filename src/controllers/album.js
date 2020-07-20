@@ -1,7 +1,7 @@
 const { Artist, Album } = require('../models');
 
 // controllers for POST requests
-exports.create = (req, res) => {
+exports.createAlbum = (req, res) => {
   
     Artist.findByPk(req.params.artistId).then(foundArtist => {
       if (!foundArtist) {

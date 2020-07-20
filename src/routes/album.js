@@ -1,4 +1,4 @@
-   const albumControllers = require('../controllers/album')
+const albumControllers = require('../controllers/album')
 
 module.exports = (app) => {
     // post requests

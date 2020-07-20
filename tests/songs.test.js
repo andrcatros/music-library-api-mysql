@@ -30,19 +30,18 @@ describe('/songs', () => {
       album = await Album.create({
         name: 'InnerSpeaker',
         year: 2010,
-  //      artistId: artist.id,
+        ArtistId: artist.id,
       });
     } catch (err) {
       console.log(err);
     }
   });
 
-  describe('POST /album/:albumId/song', () => {
-    xit('creates a new song under an album', (done) => {
+  describe('POST artists/:artistId/albums/:albumId/songs', () => {
+    it('creates a new song under an album', (done) => {
       request(app)
-        .post(`artists/${artist.id}/albums/${album.id}/songs`)
+        .post(`/artists/${artist.id}/albums/${album.id}/songs`)
         .send({
-//          artist: artist.id,
           name: 'Solitude Is Bliss',
         })
         .then((res) => {
@@ -50,8 +49,8 @@ describe('/songs', () => {
           const songId = res.body.id;
           expect(res.body.id).to.equal(songId);
           expect(res.body.name).to.equal('Solitude Is Bliss');
-//          expect(res.body.artistId).to.equal(artist.id);
-          expect(res.body.albumId).to.equal(album.id);
+          expect(res.body.ArtistId).to.equal(artist.id);
+          expect(res.body.AlbumId).to.equal(album.id);
           done();
         });
     });

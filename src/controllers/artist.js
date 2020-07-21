@@ -5,7 +5,7 @@ exports.create = (req, res) =>{
 };
 
 exports.list = (req, res) => {
-    Artist.findAll().then(artists => res.status(200).json(artists))
+    Artist.findAll({}).then(artists => res.status(200).json(artists))
 };
 
 exports.getArtistsById = (req, res) => {

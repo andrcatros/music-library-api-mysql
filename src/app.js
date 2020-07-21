@@ -1,19 +1,10 @@
 const express = require('express');
 
-const artistRouter = require('./routes/artist');
-const albumRouter = require('./routes/album');
-const songRouter = require('./routes/song')
+// import Routers from route folder  
 
 const app = express();
 app.use(express.json());
 
-// artists routes 
-artistRouter(app);
-
-// album routes 
-albumRouter(app);
-
-// song routes
-songRouter(app);
+// set up Routers 
 
 module.exports = app;

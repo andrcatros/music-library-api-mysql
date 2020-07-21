@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
-const ArtistModel = require('./artist');
-const AlbumModel = require('./album');
-const SongModel = require('./song');
+
+// import your models here 
+const ExampleModel = require('./example');
+
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
@@ -13,23 +14,11 @@ const setupDatabase = () => {
     logging: false,
   });
 
-  const Artist = ArtistModel(connection, Sequelize);
-  const Album = AlbumModel(connection, Sequelize);
-  const Song = SongModel(connection, Sequelize);
-
-
-
-  Album.belongsTo(Artist, {foreignKey: 'artistId'});
-  Artist.hasMany(Album, {foreignKey: 'artistId'});
-
-  Album.hasMany(Song, {foreignKey: 'albumId'});
-  Song.belongsTo(Album, {foreignKey: 'albumId'});
-  Song.belongsTo(Artist, {foreignKey: 'artistId'});
-
+  const Example = ExampleModel(connection, Sequelize);
 
   connection.sync({ alter: true });
   return {
-    Artist, Album, Song
+    Example
   };
 };
 
